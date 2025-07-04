@@ -4,7 +4,7 @@ import SwiftUI
 struct FediAppApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            TimelineView(state: TimelineState())
         }
     }
 }
