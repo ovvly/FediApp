@@ -4,7 +4,9 @@ import SwiftUI
 struct FediAppApp: App {
     var body: some Scene {
         WindowGroup {
-            TimelineView(state: TimelineState())
+            let state = TimelineState()
+            let interactor = DefaultTimelineInteractor(state: state)
+            TimelineView(state: state, interactor: interactor)
         }
     }
 }

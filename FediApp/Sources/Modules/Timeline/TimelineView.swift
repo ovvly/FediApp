@@ -1,7 +1,8 @@
 import SwiftUI
 
 struct TimelineView: View {
-    var state: TimelineState
+    @State var state: TimelineState
+    var interactor: TimelineInteractor
     
     var body: some View {
         ScrollView {
@@ -11,9 +12,18 @@ struct TimelineView: View {
                 }
             }
         }
+        .task {
+            await interactor.start()
+        }
     }
 }
 
 #Preview {
-    TimelineView(state: TimelineState())
+    TimelineView(state: TimelineState(), interactor: TimelineInteractorStub())
+}
+
+final class TimelineInteractorStub: TimelineInteractor {
+     func start() async {
+        
+    }
 }
