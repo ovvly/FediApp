@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct TimelinePost: View {
+    let post: Post
+    
     var body: some View {
         HStack {
             VStack {
@@ -9,16 +11,33 @@ struct TimelinePost: View {
             }
             VStack(alignment: .leading) {
                 HStack {
-                    Text("John Doe").bold()
-                    Text("@johnDoe@masto.don")
+                    Text(post.authorName)
+                        .bold()
+                        .lineLimit(1)
+                    Text(post.authorHandle)
+                        .font(.caption)
+                        .lineLimit(1)
                 }
-                Text("Some example message")
+                Text(post.text)
             }
+            Spacer()
         }
         .padding()
     }
 }
 
 #Preview {
-    TimelinePost()
+    VStack {
+        TimelinePost(post: Post.stub)
+    }
+}
+
+private extension Post {
+    static var stub: Post {
+        .init(
+            authorName: "John Doe",
+            authorHandle: "@johndoe",
+            text: "Hello, world!"
+        )
+    }
 }
