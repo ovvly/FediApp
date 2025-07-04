@@ -14,19 +14,11 @@
 			remoteGlobalIDString = 3BAF9DDE2E17E071002E2771;
 			remoteInfo = FediApp;
 		};
-		3BAF9DF82E17E074002E2771 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3BAF9DD72E17E071002E2771 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 3BAF9DDE2E17E071002E2771;
-			remoteInfo = FediApp;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		3BAF9DDF2E17E071002E2771 /* FediApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FediApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3BAF9DED2E17E074002E2771 /* FediAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FediAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		3BAF9DF72E17E074002E2771 /* FediAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FediAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -57,13 +49,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		3BAF9DF42E17E074002E2771 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -81,7 +66,6 @@
 			children = (
 				3BAF9DDF2E17E071002E2771 /* FediApp.app */,
 				3BAF9DED2E17E074002E2771 /* FediAppTests.xctest */,
-				3BAF9DF72E17E074002E2771 /* FediAppUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -134,26 +118,6 @@
 			productReference = 3BAF9DED2E17E074002E2771 /* FediAppTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		3BAF9DF62E17E074002E2771 /* FediAppUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 3BAF9E072E17E074002E2771 /* Build configuration list for PBXNativeTarget "FediAppUITests" */;
-			buildPhases = (
-				3BAF9DF32E17E074002E2771 /* Sources */,
-				3BAF9DF42E17E074002E2771 /* Frameworks */,
-				3BAF9DF52E17E074002E2771 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				3BAF9DF92E17E074002E2771 /* PBXTargetDependency */,
-			);
-			name = FediAppUITests;
-			packageProductDependencies = (
-			);
-			productName = FediAppUITests;
-			productReference = 3BAF9DF72E17E074002E2771 /* FediAppUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -168,10 +132,6 @@
 						CreatedOnToolsVersion = 16.4;
 					};
 					3BAF9DEC2E17E074002E2771 = {
-						CreatedOnToolsVersion = 16.4;
-						TestTargetID = 3BAF9DDE2E17E071002E2771;
-					};
-					3BAF9DF62E17E074002E2771 = {
 						CreatedOnToolsVersion = 16.4;
 						TestTargetID = 3BAF9DDE2E17E071002E2771;
 					};
@@ -193,7 +153,6 @@
 			targets = (
 				3BAF9DDE2E17E071002E2771 /* FediApp */,
 				3BAF9DEC2E17E074002E2771 /* FediAppTests */,
-				3BAF9DF62E17E074002E2771 /* FediAppUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -207,13 +166,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		3BAF9DEB2E17E074002E2771 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		3BAF9DF52E17E074002E2771 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -237,13 +189,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		3BAF9DF32E17E074002E2771 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -251,11 +196,6 @@
 			isa = PBXTargetDependency;
 			target = 3BAF9DDE2E17E071002E2771 /* FediApp */;
 			targetProxy = 3BAF9DEE2E17E074002E2771 /* PBXContainerItemProxy */;
-		};
-		3BAF9DF92E17E074002E2771 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 3BAF9DDE2E17E071002E2771 /* FediApp */;
-			targetProxy = 3BAF9DF82E17E074002E2771 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -387,9 +327,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = TN3WPQAA2X;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -398,8 +340,11 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.owlyapps.FediApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -412,9 +357,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = TN3WPQAA2X;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -423,8 +370,11 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.owlyapps.FediApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -462,36 +412,6 @@
 			};
 			name = Release;
 		};
-		3BAF9E082E17E074002E2771 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.owlyapps.FediAppUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TEST_TARGET_NAME = FediApp;
-			};
-			name = Debug;
-		};
-		3BAF9E092E17E074002E2771 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.owlyapps.FediAppUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TEST_TARGET_NAME = FediApp;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -518,15 +438,6 @@
 			buildConfigurations = (
 				3BAF9E052E17E074002E2771 /* Debug */,
 				3BAF9E062E17E074002E2771 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		3BAF9E072E17E074002E2771 /* Build configuration list for PBXNativeTarget "FediAppUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				3BAF9E082E17E074002E2771 /* Debug */,
-				3BAF9E092E17E074002E2771 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
