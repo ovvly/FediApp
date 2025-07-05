@@ -16,19 +16,3 @@ struct AppView: View {
         }
     }
 }
-
-@MainActor
-final class ViewsFactory {
-    @ViewBuilder
-    func buildTimelineView(router: TimelineRouter) -> some View {
-        let state = TimelineState()
-        let interactor = DefaultTimelineInteractor(state: state, router: router, postsService: PostsService())
-        
-        TimelineView(state: state, interactor: interactor)
-    }
-    
-    @ViewBuilder
-    func buildPostDetails(post: Post) -> some View {
-        Text(post.text)
-    }
-}

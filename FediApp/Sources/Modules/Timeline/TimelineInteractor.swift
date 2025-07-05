@@ -31,18 +31,3 @@ final class DefaultTimelineInteractor: TimelineInteractor {
         router?.presentDetails(of: post)
     }
 }
-
-protocol PostsServing {
-    func fetchPosts() async throws -> [Post]
-}
-
-final class PostsService: PostsServing {
-    func fetchPosts() async throws -> [Post] {
-        try? await Task.sleep(for: .seconds(1))
-        return [
-            Post(authorName: "Lorem Ipsum", authorHandle: "@lorem@ipsum.com", text: "dolor sic"),
-            Post(authorName: "John Mastodon", authorHandle: "@join.mastodon@masto.don", text: "hello"),
-            Post(authorName: "Varroa Destructor", authorHandle: "@varoa@desctructor.com", text: "bla bla bla")
-        ]
-    }
-}

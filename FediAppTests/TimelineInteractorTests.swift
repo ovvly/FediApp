@@ -2,7 +2,6 @@ import Testing
 @testable import FediApp
 
 struct TimelineInteractorTests {
-
     @Test("When start is called it should return list of posts")
     func start() async throws {
         let state = await TimelineState()
