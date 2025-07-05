@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct TimelinePost: View {
+struct TimelinePostView: View {
     let post: Post
     
     var body: some View {
@@ -28,7 +28,7 @@ struct TimelinePost: View {
 
 #Preview {
     VStack {
-        TimelinePost(post: Post.stub)
+        TimelinePostView(post: Post.stub)
     }
 }
 

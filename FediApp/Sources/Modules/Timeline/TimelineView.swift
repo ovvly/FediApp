@@ -8,7 +8,10 @@ struct TimelineView: View {
         ScrollView {
             LazyVStack {
                 ForEach(state.posts) { post in
-                    TimelinePost(post: post)
+                    TimelinePostView(post: post)
+                        .onTapGesture {
+                            interactor.selected(post: post)
+                        }
                 }
             }
         }
@@ -23,7 +26,6 @@ struct TimelineView: View {
 }
 
 final class TimelineInteractorStub: TimelineInteractor {
-     func start() async {
-        
-    }
+    func selected(post: Post) { }
+    func start() async { }
 }
