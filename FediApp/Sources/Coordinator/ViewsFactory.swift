@@ -17,4 +17,10 @@ final class ViewsFactory {
     func buildPostDetails(post: Post) -> some View {
         Text(post.text)
     }
+    
+    @ViewBuilder
+    func buildWelcomeScreen() -> some View {
+        let interactor = DefaultWelcomeInteractor()
+        WelcomeView(interactor: interactor)
+    }
 }
