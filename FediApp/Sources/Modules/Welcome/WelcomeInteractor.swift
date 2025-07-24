@@ -3,12 +3,23 @@ protocol WelcomeInteractor {
     func showFeeds()
 }
 
+protocol WelcomeRouter: AnyObject {
+    func presentFeed()
+    func presentLogin()
+}
+
 final class DefaultWelcomeInteractor: WelcomeInteractor {
+    private weak var router: WelcomeRouter?
+
+    init(router: WelcomeRouter) {
+        self.router = router
+    }
+    
     func logIn() {
-        print("log in")
+        router?.presentLogin()
     }
     
     func showFeeds() {
-        print("show feeds")
+        router?.presentFeed()
     }
 }
