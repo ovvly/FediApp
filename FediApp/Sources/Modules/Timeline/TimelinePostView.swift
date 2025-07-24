@@ -18,7 +18,9 @@ struct TimelinePostView: View {
                         .font(.caption)
                         .lineLimit(1)
                 }
-                Text(post.text)
+                if let text = post.attributedText {
+                    Text(text)
+                }
             }
             Spacer()
         }
