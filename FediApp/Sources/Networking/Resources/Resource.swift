@@ -7,6 +7,7 @@ public protocol Resource {
     var httpRequestMethod: RequestMethod { get }
     var body: Data? { get }
     var query: Parameters? { get }
+    var isVersioned: Bool { get }
     func parse(_ data: Data, with parser: DataParser) throws -> ResourceType
 }
 

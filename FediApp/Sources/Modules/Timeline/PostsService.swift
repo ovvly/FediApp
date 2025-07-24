@@ -10,7 +10,7 @@ final class PostsService: PostsServing {
     }
     
     func fetchPosts() async throws -> [Post] {
-        let resource = GetTimeline()
+        let resource = GetTimelineResource()
         let response = try await networkClient.request(resource: resource)
         return response.map(Post.init)
         

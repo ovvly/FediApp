@@ -11,10 +11,12 @@ enum NetworkingError: Error {
 final class NetworkClient {
     private let networkSession: NetworkSession
     private let host: String
+    private let apiVersion: String
 
-    init(with networkSession: NetworkSession = URLSession.shared, host: String) {
+    init(with networkSession: NetworkSession = URLSession.shared, host: String, apiVersion: String) {
         self.networkSession = networkSession
         self.host = host
+        self.apiVersion = apiVersion
     }
 
     func request<R: Resource>(resource: R) async throws -> R.ResourceType {

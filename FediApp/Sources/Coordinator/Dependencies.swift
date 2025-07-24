@@ -4,6 +4,6 @@ final class Dependencies {
     }
     
     private var networkClient: NetworkClient {
-        NetworkClient(host: "https://pol.social/api/v1")
+        NetworkClient(host: "https://pol.social", apiVersion: "/api/v1")
     }
 }
