@@ -12,7 +12,9 @@ final class ViewsFactory {
     
     @ViewBuilder
     func buidLogin() -> some View {
-        Text("login not implemented yet")
+        let state = LoginState()
+        let interactor = DefaultLoginInteractor(state: state)
+        LoginView(state: state, interactor: interactor)
     }
     
     @ViewBuilder

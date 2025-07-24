@@ -2,7 +2,7 @@ import SwiftUI
 
 struct TimelineView: View {
     @State var state: TimelineState
-    var interactor: TimelineInteractor
+    let interactor: TimelineInteractor
     
     var body: some View {
         ScrollView {

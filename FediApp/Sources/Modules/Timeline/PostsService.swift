@@ -13,6 +13,5 @@ final class PostsService: PostsServing {
         let resource = GetTimelineResource()
         let response = try await networkClient.request(resource: resource)
         return response.map(Post.init)
-        
     }
 }
