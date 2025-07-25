@@ -1,9 +1,21 @@
+import Foundation
+
 protocol LoginInteractor {
     func login()
     func loginToPolSocial()
 }
 
 protocol LoginRouter: AnyObject {
+}
+
+private enum LoginError: Error {
+    case invalidURLProvided
+    
+    var description: String {
+        switch self {
+            case .invalidURLProvided: return "Invalid URL provided"
+        }
+    }
 }
 
 final class DefaultLoginInteractor: LoginInteractor {
@@ -16,11 +28,28 @@ final class DefaultLoginInteractor: LoginInteractor {
     func login() {
         Task {
             let url = await state.serverUrl
-            print("login to: \(url)")
+            guard let url = URL(string: url) else {
+                await show(error: .invalidURLProvided)
+                return
+            }
+            await login(to: url)
         }
     }
     
     func loginToPolSocial() {
-        print("login to pol social")
+        guard let url = URL(string: "https://pol.social") else { return }
+        Task {
+            await login(to: url)
+        }
+    }
+    
+    private func login(to url: URL) async {
+        await state.set(loading: true)
+    }
+    
+    private func show(error: LoginError) async {
+        await state.set(error: error.description)
+        try? await Task.sleep(for: .seconds(2))
+        await state.clearError()
     }
 }
