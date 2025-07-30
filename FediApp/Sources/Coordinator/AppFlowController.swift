@@ -29,3 +29,10 @@ extension AppFlowController: TimelineRouter {
         path.append(TimelineScreenDestination.details(post))
     }
 }
+
+extension AppFlowController: LoginRouter {
+    func loginCompleted() {
+        path.removeLast()
+        path.append(WelcomeScreenDestination.feed)
+    }
+}

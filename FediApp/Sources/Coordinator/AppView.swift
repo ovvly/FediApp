@@ -10,7 +10,7 @@ struct AppView: View {
                 .navigationDestination(for: WelcomeScreenDestination.self) { screen in
                     switch screen {
                     case .logIn:
-                        viewsFactory.buidLogin()
+                        viewsFactory.buidLogin(router: appFlowController)
                     case .feed:
                         viewsFactory.buildTimelineView(router: appFlowController)
                             .navigationDestination(for: TimelineScreenDestination.self) { screen in

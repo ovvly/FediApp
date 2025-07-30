@@ -11,9 +11,10 @@ final class ViewsFactory {
     }
     
     @ViewBuilder
-    func buidLogin() -> some View {
+    func buidLogin(router: LoginRouter) -> some View {
         let state = LoginState()
-        let interactor = DefaultLoginInteractor(state: state)
+        let service = dependencies.loginService
+        let interactor = DefaultLoginInteractor(state: state, router: router, loginService: service)
         LoginView(state: state, interactor: interactor)
     }
     

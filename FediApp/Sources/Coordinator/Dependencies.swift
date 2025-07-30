@@ -1,9 +1,19 @@
+import Foundation
+
 final class Dependencies {
-    var postsService: PostsService {
-        PostsService(networkClient: networkClient)
+    var postsService: PostsServing {
+        PostsService(networkClient: polSocialNetworkClient)
     }
     
-    private var networkClient: NetworkClient {
-        NetworkClient(host: "https://pol.social", apiVersion: "/api/v1")
+    var loginService: LoginServing {
+        LoginService(networkClient: unhostedNetworkClient)
+    }
+    
+    private var unhostedNetworkClient: UnhostedNetworkClient {
+        UnhostedNetworkClient()
+    }
+    
+    private var polSocialNetworkClient: HostedNetworkClient {
+        HostedNetworkClient(host: URL(string: "https://pol.social")!)
     }
 }

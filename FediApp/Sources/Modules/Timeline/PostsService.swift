@@ -3,9 +3,9 @@ protocol PostsServing {
 }
 
 final class PostsService: PostsServing {
-    let networkClient: NetworkClient
+    let networkClient: HostedNetworkClient
     
-    init(networkClient: NetworkClient) {
+    init(networkClient: HostedNetworkClient) {
         self.networkClient = networkClient
     }
     

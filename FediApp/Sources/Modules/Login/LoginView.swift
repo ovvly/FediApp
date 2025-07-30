@@ -11,6 +11,8 @@ struct LoginView: View {
                     TextField("provide mastodon server url", text: Bindable(state).serverUrl)
                         .padding()
                         .border(.gray)
+                        .autocorrectionDisabled()
+                        .autocapitalization(.none)
                     Button(action: {
                         interactor.login()
                     }, label: {
