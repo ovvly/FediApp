@@ -7,9 +7,8 @@ final class Dependencies {
     }
     
     var loginService: LoginServing {
-        LoginService(networkClient: unhostedNetworkClient, authSessionBuilder: { url, completionHandler in
-            ASWebAuthenticationSession(url: url, callbackURLScheme: "fediAppAuth", completionHandler: completionHandler)
-        })
+        let sessionHandler = ASWebAuthSessionHandler()
+        return LoginService(networkClient: unhostedNetworkClient, authSessionHandler: sessionHandler)
     }
     
     private var unhostedNetworkClient: UnhostedNetworkClient {
