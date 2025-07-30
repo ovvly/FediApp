@@ -8,6 +8,10 @@ enum NetworkingError: Error {
     case parsingError(description: String)
 }
 
+protocol UnhostedApiClient {
+    func request<R: Resource>(resource: R, from host: URL) async throws -> R.ResourceType
+}
+
 final class HostedNetworkClient {
     private let unhostedClient: UnhostedNetworkClient
     private let host: URL
@@ -22,7 +26,7 @@ final class HostedNetworkClient {
     }
 }
 
-final class UnhostedNetworkClient {
+final class UnhostedNetworkClient: UnhostedApiClient {
     private let networkSession: NetworkSession
     private let apiVersion = "/api/v1"
 
@@ -30,7 +34,11 @@ final class UnhostedNetworkClient {
         self.networkSession = networkSession
     }
 
-    func request<R: Resource>(resource: R, from host: URL, with decoder: DataParser = JSONDecoder()) async throws -> R.ResourceType {
+    func request<R>(resource: R, from host: URL) async throws -> R.ResourceType where R : Resource {
+        try await request(resource: resource, from: host, with: JSONDecoder())
+    }
+    
+    func request<R: Resource>(resource: R, from host: URL, with decoder: DataParser) async throws -> R.ResourceType {
         let request = try buildUrlRequest(for: resource, host: host)
         let (data, urlResponse) = try await networkSession.data(for: request)
         guard let statusCode = (urlResponse as? HTTPURLResponse)?.statusCode else {

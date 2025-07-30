@@ -8,7 +8,7 @@ final class Dependencies {
     
     var loginService: LoginServing {
         let sessionHandler = ASWebAuthSessionHandler()
-        return LoginService(networkClient: unhostedNetworkClient, authSessionHandler: sessionHandler)
+        return LoginService(apiClient: unhostedNetworkClient, authSessionHandler: sessionHandler)
     }
     
     private var unhostedNetworkClient: UnhostedNetworkClient {

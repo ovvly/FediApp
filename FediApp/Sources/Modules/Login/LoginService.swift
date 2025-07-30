@@ -17,18 +17,18 @@ enum LoginServiceError: Error {
 }
 
 final class LoginService: LoginServing {
-    private let networkClient: UnhostedNetworkClient
+    private let apiClient: UnhostedApiClient
     private let authSessionHandler: AuthSessionHandler
     
-    init(networkClient: UnhostedNetworkClient, authSessionHandler: AuthSessionHandler) {
-        self.networkClient = networkClient
+    init(apiClient: UnhostedApiClient, authSessionHandler: AuthSessionHandler) {
+        self.apiClient = apiClient
         self.authSessionHandler = authSessionHandler
     }
     
     func registerApp(to server: URL) async throws -> AppCredentials {
         let params = AppsParamsCodable(clinetName: "Fedi App", redirectUris: Constants.redirectURI, scopes: "read write push")
         let resource = try AppsResource(params: params)
-        let response = try await networkClient.request(resource: resource, from: server)
+        let response = try await apiClient.request(resource: resource, from: server)
         return AppCredentials(decodable: response)
     }
     
