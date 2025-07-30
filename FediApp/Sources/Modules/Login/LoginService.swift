@@ -1,7 +1,5 @@
 import Foundation
 
-typealias Token = String
-
 protocol LoginServing {
     func registerApp(to server: URL) async throws -> AppCredentials
     func login(to server: URL,
