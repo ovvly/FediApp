@@ -7,6 +7,7 @@ protocol LoginServing {
     func login(to server: URL,
                using clientId: String,
                presentingOn presentiontContextProvider: AuthContextProviding) async throws -> String
+    func obtainToken(from server: URL, clientId: String, clientSecret: String, authCode: String) async throws -> String
 }
 
 enum LoginServiceError: Error {
@@ -43,6 +44,13 @@ final class LoginService: LoginServing {
         guard let code = codeQueryItem?.value else { throw LoginServiceError.incorrectResponse }
         
         return code
+    }
+    
+    func obtainToken(from server: URL, clientId: String, clientSecret: String, authCode: String) async throws -> String {
+        let params = OAuthTokenParamsCodable(clientId: clientId, clientSecret: clientSecret, redirectUri: Constants.redirectURI, grantType: "client_credentials", code: authCode)
+        let resource = try OAuthTokenResource(params: params)
+        let response = try await apiClient.request(resource: resource, from: server)
+        return response.accessToken
     }
     
     private func buildUrl(server: URL, clientId: String) -> URL? {

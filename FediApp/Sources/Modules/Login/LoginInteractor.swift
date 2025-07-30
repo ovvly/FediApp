@@ -52,16 +52,13 @@ final class DefaultLoginInteractor: LoginInteractor {
         }
     }
     
-    //register app to url
-    //log in with username and password via browser
-    //obtain bearer token using code from browser
-    
     private func login(to url: URL) async {
         await state.set(loading: true)
         do {
             let appCredentials = try await loginService.registerApp(to: url)
             let code = try await loginService.login(to: url, using: appCredentials.id, presentingOn: webPresentationContextProvider)
-            print(code)
+            let token = try await loginService.obtainToken(from: url, clientId: appCredentials.id, clientSecret: appCredentials.secret, authCode: code)
+            print(token)
         } catch {
             await show(error: .other(error))
         }
