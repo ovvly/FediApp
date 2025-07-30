@@ -35,16 +35,25 @@ final class LoginService: LoginServing {
     func login(to server: URL,
                using clientId: String,
                presentingOn presentiontContextProvider: AuthContextProviding) async throws -> String {
-        let urlString = "\(server)/oauth/authorize?client_id=\(clientId)&scope=read+write+push&redirect_uri=\(Constants.redirectURI)&response_type=code"
-        guard let url = URL(string: urlString) else { throw LoginServiceError.failedToBuildUrl }
+        guard let url = buildUrl(server: server, clientId: clientId) else { throw LoginServiceError.failedToBuildUrl }
         
         let responseUrl = try await authSessionHandler.authenticate(url: url, contextProvider: presentiontContextProvider)
         let queryItems = URLComponents(string: responseUrl.absoluteString)?.queryItems
-        if let code = queryItems?.filter({ $0.name == "code" }).first?.value {
-            return code
-        } else {
-            throw LoginServiceError.incorrectResponse
-        }
+        let codeQueryItem = queryItems?.first(where: { $0.name == "code" })
+        guard let code = codeQueryItem?.value else { throw LoginServiceError.incorrectResponse }
+        
+        return code
+    }
+    
+    private func buildUrl(server: URL, clientId: String) -> URL? {
+        guard var urlComponents = URLComponents(url: server, resolvingAgainstBaseURL: false) else { return nil }
+        urlComponents.path.append("/oauth/authorize")
+        urlComponents.queryItems = [URLQueryItem(name: "client_id", value: clientId),
+                                    URLQueryItem(name: "scope", value: "read+write+push"),
+                                    URLQueryItem(name: "redirect_uri", value: Constants.redirectURI),
+                                    URLQueryItem(name: "response_type", value: "code")]
+        return urlComponents.url
+
     }
     
     private struct Constants {
