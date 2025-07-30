@@ -1,4 +1,5 @@
 import Foundation
+import AuthenticationServices
 
 final class Dependencies {
     var postsService: PostsServing {
@@ -6,7 +7,9 @@ final class Dependencies {
     }
     
     var loginService: LoginServing {
-        LoginService(networkClient: unhostedNetworkClient)
+        LoginService(networkClient: unhostedNetworkClient, authSessionBuilder: { url, completionHandler in
+            ASWebAuthenticationSession(url: url, callbackURLScheme: "fediAppAuth", completionHandler: completionHandler)
+        })
     }
     
     private var unhostedNetworkClient: UnhostedNetworkClient {

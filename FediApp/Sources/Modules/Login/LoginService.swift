@@ -16,11 +16,13 @@ enum LoginServiceError: Error {
 }
 
 final class LoginService: LoginServing {
-    let networkClient: UnhostedNetworkClient
-    private var webAuthSession: ASWebAuthenticationSession?
+    private let networkClient: UnhostedNetworkClient
+    private let authSessionBuilder: AuthSessionBuilder
+    private var webAuthSession: WebAuthenticationSession?
     
-    init(networkClient: UnhostedNetworkClient) {
+    init(networkClient: UnhostedNetworkClient, authSessionBuilder: @escaping AuthSessionBuilder) {
         self.networkClient = networkClient
+        self.authSessionBuilder = authSessionBuilder
     }
     
     func registerApp(to server: URL) async throws -> AppCredentials {
@@ -35,9 +37,8 @@ final class LoginService: LoginServing {
                presentingOn presentiontContextProvider: ASWebAuthenticationPresentationContextProviding) async throws -> String {
         let urlString = "\(server)/oauth/authorize?client_id=\(clientId)&scope=read+write+push&redirect_uri=\(Constants.redirectURI)&response_type=code"
         guard let url = URL(string: urlString) else { throw LoginServiceError.failedToBuildUrl }
-        let scheme = "fediAppAuth"
         return try await withCheckedThrowingContinuation { continuation in
-            webAuthSession = ASWebAuthenticationSession(url: url, callbackURLScheme: scheme) { callbackURL, error in
+            webAuthSession = authSessionBuilder(url) { callbackURL, error in
                 guard error == nil, let callbackURL = callbackURL else { return }
                 let queryItems = URLComponents(string: callbackURL.absoluteString)?.queryItems
                 if let code = queryItems?.filter({ $0.name == "code" }).first?.value {
@@ -58,3 +59,15 @@ final class LoginService: LoginServing {
         static let redirectURI = "fediapp://oauth"
     }
 }
+
+typealias AuthSessionCompletionHandler = (URL?, (any Error)?) -> Void
+typealias AuthSessionBuilder = (URL, @escaping AuthSessionCompletionHandler) -> WebAuthenticationSession
+
+protocol WebAuthenticationSession: AnyObject {
+    init(url: URL, callbackURLScheme: String?, completionHandler: @escaping AuthSessionCompletionHandler)
+    func start() -> Bool
+    
+    var presentationContextProvider: ASWebAuthenticationPresentationContextProviding? { get set }
+}
+
+extension ASWebAuthenticationSession: WebAuthenticationSession { }
