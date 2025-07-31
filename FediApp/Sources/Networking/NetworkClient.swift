@@ -4,7 +4,7 @@ enum NetworkingError: Error {
     case failedToBuildRequest
     case requestPayloadParsingError(Error?)
     case invalidResponse
-    case invalidStatusCode(httpCode: Int)
+    case invalidStatusCode(httpCode: Int, message: String)
     case parsingError(description: String)
 }
 
@@ -15,6 +15,7 @@ protocol UnhostedApiClient {
 final class HostedNetworkClient {
     private let unhostedClient: UnhostedNetworkClient
     private let host: URL
+    var token: String?
     
     init(with networkSession: NetworkSession = URLSession.shared, host: URL) {
         self.unhostedClient = UnhostedNetworkClient(with: networkSession)
@@ -22,7 +23,7 @@ final class HostedNetworkClient {
     }
     
     func request<R: Resource>(resource: R, with decoder: DataParser = JSONDecoder()) async throws -> R.ResourceType {
-        try await unhostedClient.request(resource: resource, from: host, with: decoder)
+        try await unhostedClient.request(resource: resource, from: host, token: token, with: decoder)
     }
 }
 
@@ -38,20 +39,23 @@ final class UnhostedNetworkClient: UnhostedApiClient {
         try await request(resource: resource, from: host, with: JSONDecoder())
     }
     
-    func request<R: Resource>(resource: R, from host: URL, with decoder: DataParser) async throws -> R.ResourceType {
-        let request = try buildUrlRequest(for: resource, host: host)
+    func request<R: Resource>(resource: R, from host: URL, token: String? = nil, with decoder: DataParser) async throws -> R.ResourceType {
+        let request = try buildUrlRequest(for: resource, host: host, token: token)
         let (data, urlResponse) = try await networkSession.data(for: request)
         guard let statusCode = (urlResponse as? HTTPURLResponse)?.statusCode else {
             throw NetworkingError.invalidResponse
         }
         guard 200 ..< 300 ~= statusCode else {
+            let response = try? JSONDecoder().decode([String: String].self, from: data)
+            let errorMessage = response?["error"] ?? ""
             print(statusCode)
-            throw NetworkingError.invalidStatusCode(httpCode: statusCode)
+            print(errorMessage)
+            throw NetworkingError.invalidStatusCode(httpCode: statusCode, message: errorMessage)
         }
         return try resource.parse(data, with: decoder)
     }
 
-    private func buildUrlRequest<R: Resource>(for resource: R, host: URL) throws -> URLRequest {
+    private func buildUrlRequest<R: Resource>(for resource: R, host: URL, token: String?) throws -> URLRequest {
         guard let requestURL = resource.buildUrl(host: host, apiVersion: apiVersion) else {
             throw NetworkingError.failedToBuildRequest
         }
@@ -60,6 +64,9 @@ final class UnhostedNetworkClient: UnhostedApiClient {
         request.httpBody = resource.body
         if resource.body != nil {
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        }
+        if let token {
+            request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         }
         return request
     }

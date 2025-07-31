@@ -25,7 +25,7 @@ final class LoginService: LoginServing {
     }
     
     func registerApp(to server: URL) async throws -> AppCredentials {
-        let params = AppsParamsCodable(clinetName: "Fedi App", redirectUris: Constants.redirectURI, scopes: "read write push")
+        let params = AppsParamsCodable(clinetName: "Fedi App", redirectUris: Constants.redirectURI, scopes: "read")
         let resource = try AppsResource(params: params)
         let response = try await apiClient.request(resource: resource, from: server)
         return AppCredentials(decodable: response)
@@ -45,7 +45,7 @@ final class LoginService: LoginServing {
     }
     
     func obtainToken(from server: URL, clientId: String, clientSecret: String, authCode: String) async throws -> String {
-        let params = OAuthTokenParamsCodable(clientId: clientId, clientSecret: clientSecret, redirectUri: Constants.redirectURI, grantType: "client_credentials", code: authCode)
+        let params = OAuthTokenParamsCodable(clientId: clientId, clientSecret: clientSecret, redirectUri: Constants.redirectURI, grantType: "authorization_code", code: authCode)
         let resource = try OAuthTokenResource(params: params)
         let response = try await apiClient.request(resource: resource, from: server)
         return response.accessToken
@@ -55,7 +55,7 @@ final class LoginService: LoginServing {
         guard var urlComponents = URLComponents(url: server, resolvingAgainstBaseURL: false) else { return nil }
         urlComponents.path.append("/oauth/authorize")
         urlComponents.queryItems = [URLQueryItem(name: "client_id", value: clientId),
-                                    URLQueryItem(name: "scope", value: "read+write+push"),
+                                    URLQueryItem(name: "scopes", value: "read"),
                                     URLQueryItem(name: "redirect_uri", value: Constants.redirectURI),
                                     URLQueryItem(name: "response_type", value: "code")]
         return urlComponents.url

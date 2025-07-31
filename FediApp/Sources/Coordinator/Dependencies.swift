@@ -11,6 +11,12 @@ final class Dependencies {
         return LoginService(apiClient: unhostedNetworkClient, authSessionHandler: sessionHandler)
     }
     
+    func accountService(host: URL, token: String) -> AccountServing {
+        let client = HostedNetworkClient(host: host)
+        client.token = token
+        return AccountService(apiClient: client)
+    }
+    
     private var unhostedNetworkClient: UnhostedNetworkClient {
         UnhostedNetworkClient()
     }
