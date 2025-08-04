@@ -5,23 +5,26 @@ struct WelcomeView: View {
     
     var body: some View {
         VStack(spacing: 20) {
+            Text("Hi, this app is simple mastodon clinet allowing you to log in to your account on mastodon servers or simply just check how mastodon looks like")
+                .font(.title3)
+                .fontWeight(.semibold)
+            Spacer()
+                .frame(height: 60)
             Button {
                 interactor.logIn()
             } label: {
-                Text("Log in")
+                Text("Log in to mastodon server")
             }
             .buttonStyle(PrimaryButtonStyle())
-            .padding(.horizontal, 20)
-            
             
             Button {
                 interactor.showFeeds()
             } label: {
-                Text("Show me some public feeds")
+                Text("Check public feeds")
             }
             .buttonStyle(SecondaryButtonStyle())
-            .padding(.horizontal, 20)
         }
+        .padding(.horizontal, 20)
     }
 }
 

@@ -6,9 +6,9 @@ struct PrimaryButtonStyle: ButtonStyle {
             .frame(height: 48)
             .frame(maxWidth: .infinity)
             .foregroundColor(.white)
-            .background(Color.blue)
-            .cornerRadius(24)
-            .font(.system(size: 16.0, weight: .semibold, design: .default))
+            .background(Color.mastodonViolet)
+            .cornerRadius(4)
+            .font(.system(size: 16.0, weight: .bold, design: .default))
     }
 }
 
@@ -17,17 +17,22 @@ struct SecondaryButtonStyle: ButtonStyle {
         configuration.label
             .frame(height: 48)
             .frame(maxWidth: .infinity)
-            .foregroundColor(.white)
-            .background(Color.green)
-            .cornerRadius(24)
-            .font(.system(size: 16.0, weight: .semibold, design: .default))
+            .foregroundColor(.mastodonViolet)
+            .background(Color.white)
+            .cornerRadius(4)
+            .font(.system(size: 16.0, weight: .bold, design: .default))
+            .overlay(
+                RoundedRectangle(cornerRadius: 4)
+                        .stroke(Color.mastodonViolet, lineWidth: 2)
+            )
     }
 }
 
-
 #Preview {
-    Button("Primary", action: {})
-        .buttonStyle(PrimaryButtonStyle())
-    Button("Secondary", action: {})
-        .buttonStyle(SecondaryButtonStyle())
+    VStack {
+        Button("Primary", action: {})
+            .buttonStyle(PrimaryButtonStyle())
+        Button("Secondary", action: {})
+            .buttonStyle(SecondaryButtonStyle())
+    }.padding()
 }
