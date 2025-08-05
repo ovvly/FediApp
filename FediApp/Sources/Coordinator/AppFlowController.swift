@@ -9,6 +9,10 @@ enum TimelineScreenDestination: SelfIdentifiable {
     case details(Post)
 }
 
+enum InstanceSelectingDestination: SelfIdentifiable {
+    case timeline(String)
+}
+
 @Observable
 final class AppFlowController {
     var path = NavigationPath()
@@ -34,5 +38,11 @@ extension AppFlowController: LoginRouter {
     func loginCompleted() {
         path.removeLast()
         path.append(WelcomeScreenDestination.feed)
+    }
+}
+
+extension AppFlowController: InstanceSelectingRouter {
+    func selected(instance: String) {
+        path.append(InstanceSelectingDestination.timeline(instance))
     }
 }

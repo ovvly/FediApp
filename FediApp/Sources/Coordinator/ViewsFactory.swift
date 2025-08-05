@@ -31,6 +31,13 @@ final class ViewsFactory {
     }
     
     @ViewBuilder
+    func buildInstanceSelectingView(router: InstanceSelectingRouter) -> some View {
+        let state = InstanceSelectingState()
+        let interactor = DefaultInstanceSelectingInteractor(state: state, router: router)
+        InstanceSelectingView(state: state, interactor: interactor)
+    }
+    
+    @ViewBuilder
     func buildPostDetails(post: Post) -> some View {
         Text(post.text)
     }

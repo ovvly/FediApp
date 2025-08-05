@@ -12,11 +12,18 @@ struct AppView: View {
                     case .logIn:
                         viewsFactory.buidLogin(router: appFlowController)
                     case .feed:
-                        viewsFactory.buildTimelineView(router: appFlowController)
-                            .navigationDestination(for: TimelineScreenDestination.self) { screen in
+                        viewsFactory.buildInstanceSelectingView(router: appFlowController)
+                            .navigationDestination(for: InstanceSelectingDestination.self) { screen in
                                 switch screen {
-                                case .details(let post):
-                                    viewsFactory.buildPostDetails(post: post)
+                                case .timeline(let instance):
+                                    viewsFactory.buildTimelineView(router: appFlowController)
+                                        .navigationDestination(for: TimelineScreenDestination.self) { screen in
+                                            switch screen {
+                                            case .details(let post):
+                                                viewsFactory.buildPostDetails(post: post)
+                                            }
+                                        }
+
                                 }
                             }
                     }
