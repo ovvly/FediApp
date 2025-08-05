@@ -15,7 +15,7 @@ struct LoginServiceTests {
         authSessionHandlerSpy.authenticateReturnValue = URL(string: "https://auth.return.value")!
         
         _ = try? await sut.login(to: URL(string: "https://fake.url.com")!, using: "fake_client_id", presentingOn: authContextProvidingStub)
-        #expect(authSessionHandlerSpy.capturedUrl == URL(string: "https://fake.url.com/oauth/authorize?client_id=fake_client_id&scope=read+write+push&redirect_uri=fediapp://oauth&response_type=code")!)
+        #expect(authSessionHandlerSpy.capturedUrl == URL(string: "https://fake.url.com/oauth/authorize?client_id=fake_client_id&scopes=read&redirect_uri=fediapp://oauth&response_type=code")!)
         #expect(authSessionHandlerSpy.capturedAuthContextProviding === authContextProvidingStub)
     }
     
