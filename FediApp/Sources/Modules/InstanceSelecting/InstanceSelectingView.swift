@@ -5,14 +5,26 @@ struct InstanceSelectingView: View {
     let interactor: InstanceSelectingInteractor
     
     var body: some View {
-        VStack {
-            Text("Select mastodon instance from list or provide instance URL manually")
-                .font(.title3)
-                .fontWeight(.semibold)
-            List(state.instances, id: \.self, selection: Bindable(state).selectedInstance) { instance in
-                Text(instance)
-            }.onChange(of: state.selectedInstance, initial: false) {
-                interactor.selected(instance: state.selectedInstance)
+        ZStack {
+            VStack {
+                Text("Select mastodon instance from list or provide instance URL manually")
+                    .font(.title3)
+                    .fontWeight(.semibold)
+                List(state.instances, id: \.self, selection: Bindable(state).selectedInstance) { instance in
+                    Text(instance)
+                }.onChange(of: state.selectedInstance, initial: false) {
+                    interactor.selected(instance: state.selectedInstance)
+                }
+            }
+            
+            if let error = state.error {
+                VStack {
+                    Text(error)
+                        .padding()
+                        .background(Color.red)
+                        .cornerRadius(8)
+                    Spacer()
+                }
             }
         }
         .onAppear {

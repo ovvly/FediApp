@@ -6,5 +6,5 @@ struct VerifyCredentialsResource: Resource {
     let path: String = "accounts/verify_credentials"
     let body: Data? = nil
     let query: Parameters? = nil
-    let isVersioned: Bool = true
+    let apiVersion: Int? = 1
 }

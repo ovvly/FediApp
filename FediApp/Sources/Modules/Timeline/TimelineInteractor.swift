@@ -10,17 +10,17 @@ protocol TimelineRouter: AnyObject {
 final class DefaultTimelineInteractor: TimelineInteractor {
     private var state: TimelineState
     private weak var router: TimelineRouter?
-    private let postsService: PostsServing
+    private let timelineService: TimelineServing
     
-    init(state: TimelineState, router: TimelineRouter, postsService: PostsServing) {
+    init(state: TimelineState, router: TimelineRouter, timelineService: TimelineServing) {
         self.state = state
         self.router = router
-        self.postsService = postsService
+        self.timelineService = timelineService
     }
     
     func start() async {
         do {
-            let newPosts = try await postsService.fetchPosts()
+            let newPosts = try await timelineService.fetchLocalTimeline()
             await state.update(posts: newPosts)
         } catch {
             print(error)

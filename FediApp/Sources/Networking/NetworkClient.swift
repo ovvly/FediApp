@@ -29,7 +29,6 @@ final class HostedNetworkClient {
 
 final class UnhostedNetworkClient: UnhostedApiClient {
     private let networkSession: NetworkSession
-    private let apiVersion = "/api/v1"
 
     init(with networkSession: NetworkSession = URLSession.shared) {
         self.networkSession = networkSession
@@ -56,7 +55,7 @@ final class UnhostedNetworkClient: UnhostedApiClient {
     }
 
     private func buildUrlRequest<R: Resource>(for resource: R, host: URL, token: String?) throws -> URLRequest {
-        guard let requestURL = resource.buildUrl(host: host, apiVersion: apiVersion) else {
+        guard let requestURL = resource.buildUrl(host: host) else {
             throw NetworkingError.failedToBuildRequest
         }
         var request = URLRequest(url: requestURL)
@@ -79,10 +78,10 @@ private extension Resource {
         }
     }
 
-    func buildUrl(host: URL, apiVersion: String) -> URL? {
+    func buildUrl(host: URL) -> URL? {
         guard var urlComponents = URLComponents(url: host, resolvingAgainstBaseURL: false) else { return nil }
-        if isVersioned {
-            urlComponents.path.append(apiVersion)
+        if let apiVersion {
+            urlComponents.path.append("/api/v\(apiVersion)")
         }
         urlComponents.path.append("/\(path)")
         urlComponents.queryItems = queryItems

@@ -16,7 +16,7 @@ struct AppView: View {
                             .navigationDestination(for: InstanceSelectingDestination.self) { screen in
                                 switch screen {
                                 case .timeline(let instance):
-                                    viewsFactory.buildTimelineView(router: appFlowController)
+                                    viewsFactory.buildTimelineView(instance: instance, router: appFlowController)
                                         .navigationDestination(for: TimelineScreenDestination.self) { screen in
                                             switch screen {
                                             case .details(let post):

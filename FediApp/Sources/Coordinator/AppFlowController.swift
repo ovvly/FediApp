@@ -10,7 +10,7 @@ enum TimelineScreenDestination: SelfIdentifiable {
 }
 
 enum InstanceSelectingDestination: SelfIdentifiable {
-    case timeline(String)
+    case timeline(URL)
 }
 
 @Observable
@@ -42,7 +42,7 @@ extension AppFlowController: LoginRouter {
 }
 
 extension AppFlowController: InstanceSelectingRouter {
-    func selected(instance: String) {
+    func selected(instance: URL) {
         path.append(InstanceSelectingDestination.timeline(instance))
     }
 }

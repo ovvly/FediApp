@@ -5,6 +5,10 @@ struct GetTimelineResource: Resource {
     let httpRequestMethod: RequestMethod = .GET
     let path: String = "timelines/public"
     let body: Data? = nil
-    let query: Parameters? = nil
-    let isVersioned: Bool = true
+    let query: Parameters?
+    let apiVersion: Int? = 1
+    
+    init(local: Bool = false) {
+        self.query = ["local": local ? "true" : "false"]
+    }
 }

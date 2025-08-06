@@ -6,7 +6,7 @@ struct OAuthTokenResource: Resource {
     let path = "oauth/token"
     let body: Data?
     let query: Parameters? = nil
-    let isVersioned: Bool = false
+    let apiVersion: Int? = nil
     
     init(params: OAuthTokenParamsCodable) throws {
         let body = try JSONEncoder().encode(params)

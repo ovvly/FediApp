@@ -22,10 +22,10 @@ final class ViewsFactory {
     }
     
     @ViewBuilder
-    func buildTimelineView(router: TimelineRouter) -> some View {
+    func buildTimelineView(instance: URL, router: TimelineRouter) -> some View {
         let state = TimelineState()
-        let service = dependencies.postsService
-        let interactor = DefaultTimelineInteractor(state: state, router: router, postsService: service)
+        let service = dependencies.timelineService(instance: instance)
+        let interactor = DefaultTimelineInteractor(state: state, router: router, timelineService: service)
         
         TimelineView(state: state, interactor: interactor)
     }
@@ -33,7 +33,8 @@ final class ViewsFactory {
     @ViewBuilder
     func buildInstanceSelectingView(router: InstanceSelectingRouter) -> some View {
         let state = InstanceSelectingState()
-        let interactor = DefaultInstanceSelectingInteractor(state: state, router: router)
+        let instanceService = dependencies.instanceService
+        let interactor = DefaultInstanceSelectingInteractor(state: state, service: instanceService, router: router)
         InstanceSelectingView(state: state, interactor: interactor)
     }
     

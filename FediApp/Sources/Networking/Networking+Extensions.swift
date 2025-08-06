@@ -17,3 +17,15 @@ extension Resource where ResourceType == Void {
 }
 
 extension JSONDecoder: DataParser { }
+
+extension String: Parameter {
+    public var stringValue: String { self }
+}
+
+extension Int: Parameter {
+    public var stringValue: String { String(self) }
+}
+
+extension Bool: Parameter {
+    public var stringValue: String { String(self) }
+}
